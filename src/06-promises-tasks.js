@@ -28,8 +28,21 @@
  *      .catch((error) => console.log(error.message)) // 'Error: Wrong parameter is passed!
  *                                                    //  Ask her again.';
  */
-function willYouMarryMe(/* isPositiveAnswer */) {
-  throw new Error('Not implemented');
+function willYouMarryMe(isPositiveAnswer) {
+  const herAnswer = new Promise((resolve, reject) => {
+    if (isPositiveAnswer !== true && isPositiveAnswer !== false) {
+      reject(new Error('Wrong parameter is passed! Ask her again.'));
+    } else if (isPositiveAnswer) {
+      resolve(
+        'Hooray!!! She said "Yes"!',
+      );
+    } else {
+      resolve(
+        'Oh no, she said "No".',
+      );
+    }
+  });
+  return herAnswer;
 }
 
 
@@ -48,8 +61,15 @@ function willYouMarryMe(/* isPositiveAnswer */) {
  *    })
  *
  */
-function processAllPromises(/* array */) {
-  throw new Error('Not implemented');
+function processAllPromises(array) {
+  const answer = new Promise((resolve, reject) => {
+    const newArr = [];
+    array.map((item) => item
+      .then((data) => newArr.push(data))
+      .catch((error) => reject(error)));
+    resolve(newArr);
+  });
+  return answer;
 }
 
 /**
@@ -71,8 +91,9 @@ function processAllPromises(/* array */) {
  *    })
  *
  */
-function getFastestPromise(/* array */) {
-  throw new Error('Not implemented');
+function getFastestPromise(array) {
+  const firstPromise = Promise.race(array);
+  return firstPromise.then((data) => data);
 }
 
 /**
@@ -92,8 +113,10 @@ function getFastestPromise(/* array */) {
  *    });
  *
  */
-function chainPromises(/* array, action */) {
-  throw new Error('Not implemented');
+function chainPromises(array, action) {
+  const answerArr = processAllPromises(array)
+    .then((resolve) => resolve.reduce(action));
+  return answerArr;
 }
 
 module.exports = {
