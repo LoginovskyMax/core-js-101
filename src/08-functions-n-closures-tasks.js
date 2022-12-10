@@ -129,7 +129,7 @@ function retry(func, attempts) {
         answer = func();
         return answer;
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     return answer;
